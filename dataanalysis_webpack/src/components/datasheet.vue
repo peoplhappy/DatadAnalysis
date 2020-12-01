@@ -11,7 +11,7 @@
         align="center"
         class="upload-demo"
         drag
-        action="http://localhost:5000/file/uploader"
+        action="http://localhost:5000/file/uploadFile"
         multiple
         :before-upload="handleBefore"
         :data="filepostdata"
@@ -115,10 +115,16 @@ export default {
       console.log(response);
       this.tablecolumn = response.columns;
       this.tableData = response.data;
+      this.closeDialog()
       console.log(this.tableData);
     },
     handleBefore(file) {
-      this.filepostdata["header"] = 1;
+      if(this.radio=="1"){
+         this.filepostdata["formdata"] =JSON.stringify(this.csvFormdata);
+      }else if(this.radio=="2"){
+         this.filepostdata["formdata"] =JSON.stringify(this.excelFormdata);
+      }
+        
     },
     changeradio() {
       if (this.radio == "1") {
